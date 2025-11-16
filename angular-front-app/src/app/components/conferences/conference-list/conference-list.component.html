@@ -1,0 +1,40 @@
+<h2>Conferences</h2>
+
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th>ID</th>
+    <th>Titre</th>
+    <th>Type</th>
+    <th>Date</th>
+    <th>Durée</th>
+    <th>Inscrits</th>
+    <th>Score</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <tr *ngFor="let c of conferences">
+    <td>{{ extractId(c._links.self.href) }}</td>
+    <td>{{ c.titre }}</td>
+    <td>{{ c.type }}</td>
+    <td>{{ c.date }}</td>
+    <td>{{ c.duree }}</td>
+    <td>{{ c.nbInscrits }}</td>
+    <td>{{ c.score }}</td>
+
+    <td>
+      <a
+        [routerLink]="[
+          '/conference',
+          extractId(c._links.self.href),
+          'reviews'
+        ]"
+        class="btn btn-primary btn-sm">
+        Reviews
+      </a>
+    </td>
+  </tr>
+  </tbody>
+</table>
