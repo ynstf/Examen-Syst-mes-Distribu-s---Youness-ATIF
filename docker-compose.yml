@@ -1,0 +1,52 @@
+version: '3.9'
+
+services:
+
+  discovery-service:
+    build: ./discovery-service
+    container_name: discovery-service
+    ports:
+      - "8761:8761"
+
+  config-service:
+    build: ./config-service
+    container_name: config-service
+    ports:
+      - "9999:9999"
+    depends_on:
+      - discovery-service
+
+  gateway-service:
+    build: ./gateway-service
+    container_name: gateway-service
+    ports:
+      - "8888:8888"
+    depends_on:
+      - discovery-service
+      - config-service
+
+  keynote-service:
+    build: ./keynote-service
+    container_name: keynote-service
+    ports:
+      - "9001:9001"
+    depends_on:
+      - discovery-service
+      - config-service
+
+  conference-service:
+    build: ./conference-service
+    container_name: conference-service
+    ports:
+      - "9002:9002"
+    depends_on:
+      - discovery-service
+      - config-service
+
+  angular-front-app:
+    build: ./angular-front-app
+    container_name: angular-front-app
+    ports:
+      - "4200:80"
+    depends_on:
+      - gateway-service
